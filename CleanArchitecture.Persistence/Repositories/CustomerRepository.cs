@@ -5,5 +5,9 @@ namespace CleanArchitecture.Persistence.Repositories
 {
     public class CustomerRepository : GenericRepository<Customer>, ICustomerRepository
     {
+        public Task<bool> IsUniqueCustomerName(string customerFirstName, string customerLastName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
