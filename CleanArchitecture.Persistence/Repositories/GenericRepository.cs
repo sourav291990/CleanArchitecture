@@ -3,34 +3,50 @@
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using CleanArchitecture.Persistence.DbContexts;
 using CleanArchitecture.Domain.Entities.Common;
 using CleanArchitecture.Application.Contracts.Persistence;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 {
+    protected readonly CustomerDbContext _customerDbContext;
+
+    public GenericRepository(CustomerDbContext customerDbContext)
+    {
+        _customerDbContext = customerDbContext;
+    }
+
     public T Add(T entity)
     {
-        throw new NotImplementedException();
+        _customerDbContext.Add(entity);
+        _customerDbContext.SaveChanges();
+        return entity;
     }
 
     public Task<T> AddAsync(T entity)
     {
-        throw new NotImplementedException();
+        _customerDbContext.AddAsync(entity);
+        _customerDbContext.SaveChangesAsync();
+        return Task.FromResult<T>(entity);
+
     }
 
     public void Delete(T entity)
     {
-        throw new NotImplementedException();
+        _customerDbContext.Remove(entity);
+        _customerDbContext.SaveChangesAsync();
     }
 
     public Task DeleteAsync(T entity)
     {
-        throw new NotImplementedException();
+        _customerDbContext.Remove(entity);
+        _customerDbContext.SaveChangesAsync();
+        return Task.CompletedTask;
     }
 
     public bool Exists(Guid id)
     {
-        throw new NotImplementedException();
+        return null != _customerDbContext.Find<T>(id) ? true : false;
     }
 
     public Task<bool> ExistsAsync(Guid id)
