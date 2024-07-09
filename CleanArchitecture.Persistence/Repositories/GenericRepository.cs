@@ -6,29 +6,26 @@ using System.Collections.Generic;
 using CleanArchitecture.Persistence.DbContexts;
 using CleanArchitecture.Domain.Entities.Common;
 using CleanArchitecture.Application.Contracts.Persistence;
+using System.Collections.Immutable;
+using System.Data.Entity;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 {
     protected readonly CustomerDbContext _customerDbContext;
 
-    public GenericRepository(CustomerDbContext customerDbContext)
-    {
-        _customerDbContext = customerDbContext;
-    }
+    public GenericRepository(CustomerDbContext customerDbContext) => _customerDbContext = customerDbContext;
 
-    public T Add(T entity)
+    public void Add(T entity)
     {
         _customerDbContext.Add(entity);
         _customerDbContext.SaveChanges();
-        return entity;
     }
 
-    public Task<T> AddAsync(T entity)
+    public Task AddAsync(T entity)
     {
         _customerDbContext.AddAsync(entity);
         _customerDbContext.SaveChangesAsync();
-        return Task.FromResult<T>(entity);
-
+        return Task.CompletedTask;
     }
 
     public void Delete(T entity)
@@ -49,38 +46,43 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         return null != _customerDbContext.Find<T>(id) ? true : false;
     }
 
-    public Task<bool> ExistsAsync(Guid id)
+    public async Task<bool> ExistsAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var customer = await _customerDbContext.FindAsync<T>(id);
+        return customer != null;
     }
 
     public T Get(Guid id)
     {
-        throw new NotImplementedException();
+        return _customerDbContext.Find<T>(id);
     }
 
     public IReadOnlyList<T> GetAll()
     {
-        throw new NotImplementedException();
+        return _customerDbContext.Set<T>().ToList();
     }
 
-    public Task<IReadOnlyList<T>> GetAllAsync()
+    public async Task<IReadOnlyList<T>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await _customerDbContext.Set<T>().ToListAsync();
     }
 
-    public Task<T> GetAsync(Guid id)
+    public async Task<T> GetAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _customerDbContext.Set<T>().FindAsync(id);
     }
 
     public void Update(T entity)
     {
-        throw new NotImplementedException();
+        _customerDbContext.Entry(entity).State = (Microsoft.EntityFrameworkCore.EntityState)EntityState.Modified;
+        _customerDbContext.SaveChanges();
     }
 
     public Task UpdateAsync(T entity)
     {
-        throw new NotImplementedException();
+        _customerDbContext.Entry(entity).State = (Microsoft.EntityFrameworkCore.EntityState)EntityState.Modified;
+        _customerDbContext.SaveChangesAsync();
+        return Task.CompletedTask;
     }
+
 }

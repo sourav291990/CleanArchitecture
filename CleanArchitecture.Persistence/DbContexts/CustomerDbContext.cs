@@ -19,6 +19,12 @@ public class CustomerDbContext : DbContext
         return base.SaveChanges();
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(CustomerDbContext).Assembly);
+        base.OnModelCreating(modelBuilder);
+    }
+
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         UpdateBaseEntity();

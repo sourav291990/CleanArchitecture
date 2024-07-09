@@ -1,13 +1,14 @@
 ﻿namespace CleanArchitecture.Persistence.Repositories;
 
+using System.Data.Entity;
+using CleanArchitecture.Persistence.DbContexts;
 using CleanArchitecture.Domain.Entities.Customer;
 using CleanArchitecture.Application.Contracts.Persistence;
-using CleanArchitecture.Persistence.DbContexts;
 
-public class CustomerRepository : GenericRepository<Customer>, ICustomerRepository
+public class CustomerRepository(CustomerDbContext customerDbContext) : GenericRepository<Customer>(customerDbContext), ICustomerRepository
 {
-    public Task<bool> IsUniqueCustomerName(string customerFirstName, string customerLastName)
+    public async Task<bool> IsUniqueCustomerName(string customerFirstName, string customerLastName)
     {
-        throw new NotImplementedException();
+        return await _customerDbContext.Customers.AnyAsync(x => x.FirstName == customerFirstName && x.LastName == customerLastName);
     }
 }
