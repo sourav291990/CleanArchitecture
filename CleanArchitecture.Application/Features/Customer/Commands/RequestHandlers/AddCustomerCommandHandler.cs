@@ -5,6 +5,7 @@ using AutoMapper;
 using CleanArchitecture.Domain.Entities.Customer;
 using CleanArchitecture.Application.CustomExceptions;
 using CleanArchitecture.Application.Contracts.Persistence;
+using CleanArchitecture.Application.Contracts.Infrastructure.Logging;
 using CleanArchitecture.Application.Features.Customer.Commands.Requests;
 using CleanArchitecture.Application.Features.Customer.Commands.Requests.Validators;
 
@@ -12,11 +13,13 @@ public class AddCustomerCommandHandler : IRequestHandler<AddCustomerCommand, Uni
 {
     private readonly IMapper _mapper;
     private readonly ICustomerRepository _customerRepository;
+    private readonly IAppLogger<AddCustomerCommandHandler> _logger;
 
-    public AddCustomerCommandHandler(IMapper mapper, ICustomerRepository customerRepository)
+    public AddCustomerCommandHandler(IMapper mapper, ICustomerRepository customerRepository, IAppLogger<AddCustomerCommandHandler> logger)
     {
         _mapper = mapper;
         _customerRepository = customerRepository;
+        _logger = logger;
     }
 
     public async Task<Unit> Handle(AddCustomerCommand request, CancellationToken cancellationToken)
@@ -26,6 +29,7 @@ public class AddCustomerCommandHandler : IRequestHandler<AddCustomerCommand, Uni
 
         if (!validationResult.IsValid)
         {
+            _logger.LogError("Invalid customer details provided");
             throw new BadRequestException("Invalid Customer", validationResult);
         }
 

@@ -6,11 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using CleanArchitecture.Domain.Entities.Common;
 using CleanArchitecture.Domain.Entities.Customer;
 
-public class CustomerDbContext : DbContext
+public class CustomerDbContext(DbContextOptions<CustomerDbContext> options) : DbContext(options)
 {
-    public CustomerDbContext()
-    {
-    }
     public DbSet<Customer> Customers { get; set; }
 
     public override int SaveChanges()
@@ -21,6 +18,7 @@ public class CustomerDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasDefaultSchema("cleanarchitecture");
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CustomerDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
     }
@@ -39,6 +37,7 @@ public class CustomerDbContext : DbContext
             entry.Entity.UpdatedAt = DateTime.UtcNow;
             if (entry.State == EntityState.Added)
             {
+                entry.Entity.Id = Guid.NewGuid();
                 entry.Entity.CreatedAt = DateTime.UtcNow;
             }
         }

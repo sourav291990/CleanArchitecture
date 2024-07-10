@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CleanArchitecture.Persistence.DbContexts;
-using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Persistence.Repositories;
+using CleanArchitecture.Application.Contracts.Persistence;
 
 public static class PersistenceServiceRegistration
 {

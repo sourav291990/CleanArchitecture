@@ -10,9 +10,10 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         builder.HasData(
             new Customer("SampleUser", "SampleUser")
             {
+                Id = Guid.NewGuid()
             });
 
-        builder.Property(q=> q.FirstName).IsRequired().HasMaxLength(100);
-        builder.Property(q=> q.LastName).IsRequired().HasMaxLength(100);
+        builder.Property(q => q.FirstName).IsRequired().HasMaxLength(100);
+        builder.Property(q => q.LastName).IsRequired().HasMaxLength(100);
     }
 }
