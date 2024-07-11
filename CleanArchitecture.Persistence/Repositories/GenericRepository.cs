@@ -1,13 +1,12 @@
 ﻿namespace CleanArchitecture.Persistence.Repositories;
 
 using System;
+using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using CleanArchitecture.Persistence.DbContexts;
 using CleanArchitecture.Domain.Entities.Common;
 using CleanArchitecture.Application.Contracts.Persistence;
-using System.Collections.Immutable;
-using System.Data.Entity;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 {
