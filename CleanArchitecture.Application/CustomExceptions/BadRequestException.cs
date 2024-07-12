@@ -4,7 +4,7 @@ using FluentValidation.Results;
 
 public class BadRequestException : Exception
 {
-    public List<string> Errors { get; set; } = new List<string>();
+    public IDictionary<string, string[]> Errors { get; set; } = new Dictionary<string, string[]>();
     public BadRequestException(string? message) : base(message)
     {
     }
@@ -14,11 +14,6 @@ public class BadRequestException : Exception
     }
     public BadRequestException(string message, ValidationResult validationResult) : base(message)
     {
-        Errors = new List<string>();
-
-        foreach (var item in validationResult.Errors)
-        {
-            Errors.Add(item.ErrorMessage);
-        }
+        Errors = validationResult.ToDictionary();
     }
 }
