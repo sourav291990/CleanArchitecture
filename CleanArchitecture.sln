@@ -33,6 +33,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.Applicati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.IntegrationTests", "CleanArchitecture.IntegrationTests\CleanArchitecture.IntegrationTests.csproj", "{76342FE0-908E-46DB-A776-4DA0625BD401}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui", "ui", "{8F4ECB2E-ABE6-475B-9F1C-9D2D19C2F52D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.BlazorUI", "CleanArchitecture.BlazorUI\CleanArchitecture.BlazorUI.csproj", "{3673F371-37AE-4511-B6DE-FA4CDDD1AB00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +79,10 @@ Global
 		{76342FE0-908E-46DB-A776-4DA0625BD401}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76342FE0-908E-46DB-A776-4DA0625BD401}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76342FE0-908E-46DB-A776-4DA0625BD401}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3673F371-37AE-4511-B6DE-FA4CDDD1AB00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3673F371-37AE-4511-B6DE-FA4CDDD1AB00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3673F371-37AE-4511-B6DE-FA4CDDD1AB00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3673F371-37AE-4511-B6DE-FA4CDDD1AB00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +101,8 @@ Global
 		{8A318CEE-5CB0-494A-969D-2B6CC7A1CA70} = {F20C4F1D-743B-4C7E-B48D-6A83E496C3C1}
 		{A8E60682-47E8-4548-B852-D779BA23F4F5} = {F20C4F1D-743B-4C7E-B48D-6A83E496C3C1}
 		{76342FE0-908E-46DB-A776-4DA0625BD401} = {F20C4F1D-743B-4C7E-B48D-6A83E496C3C1}
+		{8F4ECB2E-ABE6-475B-9F1C-9D2D19C2F52D} = {9DC25374-43EC-47A0-81DA-C09E74C0E2F1}
+		{3673F371-37AE-4511-B6DE-FA4CDDD1AB00} = {8F4ECB2E-ABE6-475B-9F1C-9D2D19C2F52D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {856D788D-41E7-4F5E-A75F-3FB950A8E854}

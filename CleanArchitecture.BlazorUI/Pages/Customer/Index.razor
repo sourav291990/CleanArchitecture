@@ -1,0 +1,54 @@
+﻿@page "/customers/"
+@using CleanArchitecture.BlazorUI.Contracts
+@using CleanArchitecture.BlazorUI.ViewModels.Customer
+
+<h3>Customers</h3>
+
+<div class="md-2 d-flex justify-content-end">
+    <button onclick="CreateCustomer" class="btn btn-success">Add Customer</button>
+</div>
+
+@Message
+
+@if (Customers == null)
+{
+    <p>Loading data...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Primary Contant
+                </th>
+            </tr>
+        </thead>
+    </table>
+}
+
+@code {
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+    [Inject]
+    public ICustomerService CustomerService { get; set; }
+    public string Message { get; set; } = string.Empty;
+    public List<CustomerVM> Customers { get; set; } = new List<CustomerVM>();
+
+
+    protected void CreateCustomer()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Customers = await CustomerService.GetCustomers();
+    }
+
+}
+
+
