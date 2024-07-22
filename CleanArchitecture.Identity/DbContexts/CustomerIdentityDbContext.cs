@@ -8,9 +8,10 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 public class CustomerIdentityDbContext(DbContextOptions<CustomerIdentityDbContext> options) : IdentityDbContext<ApplicationUser>(options)
 {
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(builder);
-        builder.ApplyConfigurationsFromAssembly(typeof(CustomerIdentityDbContext).Assembly);
+        modelBuilder.HasDefaultSchema("cleanarchitecture");
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(CustomerIdentityDbContext).Assembly);
     }
 }
