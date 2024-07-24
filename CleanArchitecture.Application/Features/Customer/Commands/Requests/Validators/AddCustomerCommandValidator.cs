@@ -2,9 +2,12 @@
 
 using FluentValidation;
 using CleanArchitecture.Application.Contracts.Persistence;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Text.RegularExpressions;
 
 public class AddCustomerCommandValidator : AbstractValidator<AddCustomerCommand>
 {
+    public const string Pattern = @"^\(?\d{3}\)?[-. ]?\d{3}[-. ]?\d{4}$";
     private readonly ICustomerRepository _customerRepository;
     public AddCustomerCommandValidator(ICustomerRepository customerRepository)
     {
@@ -34,8 +37,12 @@ public class AddCustomerCommandValidator : AbstractValidator<AddCustomerCommand>
         return await _customerRepository.IsUniqueCustomerName(command.Customer.FirstName, command.Customer.LastName);
     }
 
-    private bool IsValidMobileNumber(long mobileNumber)
+    private bool IsValidMobileNumber(string mobileNumber)
     {
-        throw new NotImplementedException();
+
+        if (mobileNumber != null)
+            return Regex.IsMatch(mobileNumber, Pattern);
+        else
+            return false;
     }
 }

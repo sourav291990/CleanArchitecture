@@ -10,7 +10,7 @@ public class AddCustomerDto
     public string LastName { get; set; } = string.Empty;
     [Phone]
     [Required]
-    public long PrimaryContactNumber { get; set; }
+    public string PrimaryContactNumber { get; set; }
     [Phone]
-    public long SecondaryContactNumber { get; set; }
+    public string SecondaryContactNumber { get; set; }
 }

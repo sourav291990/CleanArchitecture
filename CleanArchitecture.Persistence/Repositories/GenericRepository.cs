@@ -1,9 +1,9 @@
 ﻿namespace CleanArchitecture.Persistence.Repositories;
 
 using System;
-using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using CleanArchitecture.Persistence.DbContexts;
 using CleanArchitecture.Domain.Entities.Common;
 using CleanArchitecture.Application.Contracts.Persistence;
