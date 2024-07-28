@@ -1,24 +1,19 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using CleanArchitecture.Application.Features.CustomerQuery.Queries.DTOs;
-using CleanArchitecture.Application.Features.CustomerQuery.Commands.DTOs;
-using CleanArchitecture.Application.Features.CustomerQuery.Queries.Requests;
-using CleanArchitecture.Application.Features.CustomerQuery.Commands.Requests;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace CleanArchitecture.Web.Controllers
+﻿namespace CleanArchitecture.Web.Controllers
 {
+
+    using MediatR;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Http;
+    using CleanArchitecture.Application.Features.CustomerQuery.Queries.DTOs;
+    using CleanArchitecture.Application.Features.CustomerQuery.Commands.DTOs;
+    using CleanArchitecture.Application.Features.CustomerQuery.Queries.Requests;
+    using CleanArchitecture.Application.Features.CustomerQuery.Commands.Requests;
+
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerQueryController : ControllerBase
+    public class CustomerQueryController(IMediator mediator) : ControllerBase
     {
-        private readonly IMediator _mediator;
-
-        public CustomerQueryController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        private readonly IMediator _mediator = mediator;
 
 
         // GET: api/<CustomerQueryController>

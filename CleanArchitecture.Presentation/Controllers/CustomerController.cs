@@ -5,6 +5,7 @@ namespace CleanArchitecture.Web.Controllers;
 
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using CleanArchitecture.Application.Features.Customer.Queries.DTOs;
 using CleanArchitecture.Application.Features.Customer.Commands.DTOs;
 using CleanArchitecture.Application.Features.Customer.Queries.Requests;

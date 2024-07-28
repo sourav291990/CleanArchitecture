@@ -23,7 +23,7 @@ public class GetCustomerListHandler : IRequestHandler<GetCustomerList, List<Cust
     public async Task<List<CustomerDto>> Handle(GetCustomerList request, CancellationToken cancellationToken)
     {
         var customers = await _customerRepository.GetAllAsync();
-        var customerDtos = _mapper.Map<List<CustomerDto>>(customers);
+      var customerDtos = _mapper.Map<List<CustomerDto>>(customers);
         return customerDtos;
     }
 }
