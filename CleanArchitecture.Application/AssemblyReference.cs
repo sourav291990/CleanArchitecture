@@ -1,9 +1,8 @@
-﻿using System.Reflection;
+﻿namespace CleanArchitecture.Application;
 
-namespace CleanArchitecture.Application
+using System.Reflection;
+
+public static class AssemblyReference
 {
-    public static class AssemblyReference
-    {
-        public static readonly Assembly Assembly = typeof(AssemblyReference).Assembly;
-    }
+    public static readonly Assembly Assembly = typeof(AssemblyReference).Assembly;
 }

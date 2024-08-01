@@ -1,4 +1,5 @@
-﻿namespace CleanArchitecture.Domain;
+﻿
+namespace CleanArchitecture.Identity;
 
 using System.Reflection;
 
