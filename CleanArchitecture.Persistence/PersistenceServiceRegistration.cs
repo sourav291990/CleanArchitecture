@@ -1,20 +1,30 @@
 ﻿namespace CleanArchitecture.Persistence;
 
+using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using CleanArchitecture.Persistence.Options;
+using CleanArchitecture.Persistence.Settings;
 using Microsoft.Extensions.DependencyInjection;
 using CleanArchitecture.Persistence.DbContexts;
 using CleanArchitecture.Persistence.Repositories;
 using CleanArchitecture.Application.Contracts.Persistence;
-
 public static class PersistenceServiceRegistration
 {
-    public static IServiceCollection RegisterPersistenceServices(this IServiceCollection services
-        , IConfiguration configuration)
+    public static IServiceCollection RegisterPersistenceServices(this IServiceCollection services)
     {
-        services.AddDbContext<CustomerDbContext>(options =>
+        services.ConfigureOptions<DatabaseOptionsSetup>();
+
+        services.AddDbContext<CustomerDbContext>((serviceProvider, options) =>
         {
-            options.UseSqlServer(configuration.GetConnectionString("CustomerDbConnectionString"));
+            var databaseOptions = serviceProvider.GetService<IOptions<DatabaseOptions>>()!.Value;
+            options.UseSqlServer(databaseOptions.ConnectionString, sqlServerActions =>
+                {
+                    sqlServerActions.EnableRetryOnFailure(databaseOptions.MaxRetryCount);
+                    sqlServerActions.CommandTimeout(databaseOptions.CommandTimeout);
+                });
+
+            options.EnableDetailedErrors(databaseOptions.EnableDetailedError);
+            options.EnableSensitiveDataLogging(databaseOptions.EnableSensitiveDataLogging);
         });
 
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

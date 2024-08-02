@@ -14,7 +14,7 @@ public static class PresentationServiceRegistration
         // Add services to the container.
         services.ConfigureApplicationServices();
         services.RegisterInfrastructureServices(configuration);
-        services.RegisterPersistenceServices(configuration);
+        services.RegisterPersistenceServices();
         services.RegisterIdentityServices(configuration);
 
         services.AddSwaggerGen();
