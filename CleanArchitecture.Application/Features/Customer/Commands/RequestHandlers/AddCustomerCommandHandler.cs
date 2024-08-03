@@ -9,7 +9,7 @@ using CleanArchitecture.Application.Contracts.Infrastructure.Logging;
 using CleanArchitecture.Application.Features.Customer.Commands.Requests;
 using CleanArchitecture.Application.Features.Customer.Commands.Requests.Validators;
 
-public class AddCustomerCommandHandler : IRequestHandler<AddCustomerCommand, Unit>
+public sealed class AddCustomerCommandHandler : IRequestHandler<AddCustomerCommand, Unit>
 {
     private readonly IMapper _mapper;
     private readonly ICustomerRepository _customerRepository;

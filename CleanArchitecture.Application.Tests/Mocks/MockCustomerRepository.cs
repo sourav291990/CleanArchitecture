@@ -11,7 +11,7 @@ internal class MockCustomerRepository
         var guid = Guid.NewGuid();
         var customers = new List<Customer>
         {
-            new("TestFirstName","TestLastName") { Id = guid }
+            Customer.Create("TestFirstName", "TestLastName", 1)
         };
 
         var mockRepo = new Mock<ICustomerRepository>();

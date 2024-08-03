@@ -2,7 +2,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-public class AddCustomerDto
+public sealed record AddCustomerDto
 {
     [Required]
     public string FirstName { get; set; } = string.Empty;

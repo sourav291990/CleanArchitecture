@@ -7,7 +7,7 @@
     using CleanArchitecture.Application.Contracts.Infrastructure.Logging;
     using CleanArchitecture.Application.Features.CustomerQuery.Commands.Requests;
 
-    public class AddCustomerQueryCommandHandler : IRequestHandler<AddCustomerQueryCommand, Unit>
+    public sealed class AddCustomerQueryCommandHandler : IRequestHandler<AddCustomerQueryCommand, Unit>
     {
         private readonly IMapper _mapper;
         private readonly ICustomerQueryRepository _customerQueryRepository;

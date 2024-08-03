@@ -2,7 +2,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-public class UpdateCustomerDto
+public sealed record UpdateCustomerDto
 {
     public Guid CustomerId { get; set; }
     [Required]

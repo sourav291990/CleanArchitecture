@@ -3,7 +3,7 @@
 using MediatR;
 using CleanArchitecture.Application.Features.Customer.Commands.DTOs;
 
-public sealed class UpdateCustomerCommand : IRequest<Unit>
+public sealed record UpdateCustomerCommand : IRequest<Unit>
 {
     public UpdateCustomerDto Customer { get; set; }
 }

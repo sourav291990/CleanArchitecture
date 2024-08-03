@@ -9,7 +9,7 @@ using CleanArchitecture.Application.Features.Customer.Queries.DTOs;
 using CleanArchitecture.Application.Features.Customer.Queries.Requests;
 using CleanArchitecture.Application.Contracts.Infrastructure.Logging;
 
-public class GetCustomerListHandler : IRequestHandler<GetCustomerList, List<CustomerDto>>
+public sealed class GetCustomerListHandler : IRequestHandler<GetCustomerList, List<CustomerDto>>
 {
     private readonly IMapper _mapper;
     private readonly ICustomerRepository _customerRepository;

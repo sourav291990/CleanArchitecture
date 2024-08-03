@@ -1,6 +1,6 @@
 ﻿namespace CleanArchitecture.Application.Features.CustomerQuery.Queries.DTOs;
 
-public class CustomerQueryDto
+public sealed record CustomerQueryDto
 {
     public Guid Id { get; set; }
     public Guid CustomerId { get; set; }

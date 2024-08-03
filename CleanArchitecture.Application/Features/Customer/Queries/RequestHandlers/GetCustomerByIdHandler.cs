@@ -6,7 +6,7 @@ using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Features.Customer.Queries.DTOs;
 using CleanArchitecture.Application.Features.Customer.Queries.Requests;
 
-public class GetCustomerByIdHandler : IRequestHandler<GetCustomerById, CustomerDto>
+public sealed class GetCustomerByIdHandler : IRequestHandler<GetCustomerById, CustomerDto>
 {
     private readonly IMapper _mapper;
     private readonly ICustomerRepository _customerRepository;

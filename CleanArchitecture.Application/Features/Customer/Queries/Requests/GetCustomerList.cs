@@ -3,6 +3,6 @@
 using MediatR;
 using CleanArchitecture.Application.Features.Customer.Queries.DTOs;
 
-public sealed class GetCustomerList : IRequest<List<CustomerDto>>
+public sealed record GetCustomerList : IRequest<List<CustomerDto>>
 {
 }
