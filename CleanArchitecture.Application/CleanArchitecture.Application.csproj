@@ -14,4 +14,9 @@
   <ItemGroup>
     <ProjectReference Include="..\CleanArchitecture.Domain\CleanArchitecture.Domain.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Features\Activity\Commands\DTOs\" />
+    <Folder Include="Features\Activity\Commands\RequestHandlers\" />
+    <Folder Include="Features\Activity\Commands\Requests\" />
+  </ItemGroup>
 </Project>

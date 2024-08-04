@@ -1,6 +1,6 @@
-﻿namespace CleanArchitecture.Persistence.Settings;
+﻿namespace CleanArchitecture.Persistence.Options;
 
-public class DatabaseOptions
+public class ActivityDatabaseOptions
 {
     public string ConnectionString { get; set; } = string.Empty;
     public int MaxRetryCount { get; set; }
