@@ -8,7 +8,7 @@ using CleanArchitecture.Persistence.DbContexts;
 using CleanArchitecture.Domain.Entities.Common;
 using CleanArchitecture.Application.Contracts.Persistence;
 
-public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
+public abstract class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 {
     protected readonly CustomerDbContext _customerDbContext;
 
