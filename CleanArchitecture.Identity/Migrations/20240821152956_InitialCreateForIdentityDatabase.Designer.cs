@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitecture.Identity.Migrations
 {
     [DbContext(typeof(CustomerIdentityDbContext))]
-    [Migration("20240722101005_InitialCreateNewSchema")]
-    partial class InitialCreateNewSchema
+    [Migration("20240821152956_InitialCreateForIdentityDatabase")]
+    partial class InitialCreateForIdentityDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -103,30 +103,30 @@ namespace CleanArchitecture.Identity.Migrations
                         {
                             Id = "2e1fe356-5ed5-4e46-b76e-214c960032da",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f746e393-4ad1-4116-a4c6-1e7cdd3004cb",
+                            ConcurrencyStamp = "9e0df4bf-428c-4604-be88-dbc36f6c2ed7",
                             Email = "user@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Test",
                             LastName = "User",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEElPmguXlzTZ41k74v4NhfYporiAVSBOzesx4y/IkXODrjRdA0gvgb3u64CxarfaAw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFCoI9bD8GlLpE7f+wJEX54oKhUufo+3lfCK/f0PpLCREMyNNEFlEg18qs2fATE7mQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "98394c54-dc3e-4df0-bc9d-4eb010a9b650",
+                            SecurityStamp = "7d4e1176-d0f6-48f1-97a5-20c7444a6dc2",
                             TwoFactorEnabled = false
                         },
                         new
                         {
                             Id = "9bffc491-f117-4389-bc01-4a3403389fcc",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "432985bd-881c-4e75-af75-0e3e040fa9e2",
+                            ConcurrencyStamp = "1c91c764-5924-45cb-b052-6e429fb6c054",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Test",
                             LastName = "Admin",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEMP0oeJa0ACjtAdTQCDxlZtM4prKu4QH1CrUUYw77/IjHy/2qUzHvkBhLTF9zuVwXg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKQK3be79ORpA5BnzwbYu+2FC0HXFcbTtz7QMn0lSKqEVY219o/gTSNl+Dt6xOyylQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "72cb22bb-441a-42bf-9808-d0750f82facc",
+                            SecurityStamp = "2b27366d-90bc-4225-83b7-6535f31326d5",
                             TwoFactorEnabled = false
                         });
                 });

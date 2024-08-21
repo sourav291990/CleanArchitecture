@@ -25,7 +25,7 @@ public class ExceptionMiddleware
         }
     }
 
-    private async Task HandleExceptionAsync(HttpContext httpContext, Exception ex)
+    private static async Task HandleExceptionAsync(HttpContext httpContext, Exception ex)
     {
         HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
         dynamic problem;

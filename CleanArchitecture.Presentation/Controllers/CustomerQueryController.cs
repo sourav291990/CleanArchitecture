@@ -5,6 +5,7 @@
     using Asp.Versioning;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Authorization;
     using CleanArchitecture.Application.Features.CustomerQuery.Queries.DTOs;
     using CleanArchitecture.Application.Features.CustomerQuery.Commands.DTOs;
     using CleanArchitecture.Application.Features.CustomerQuery.Queries.Requests;
@@ -13,6 +14,7 @@
     [ApiController]
     [ApiVersion(1)]
     [Route("api/v{version:apiVersion}/[controller]")]
+    [Authorize]
     public class CustomerQueryController(IMediator mediator) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
