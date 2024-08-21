@@ -2,6 +2,7 @@
 {
 
     using MediatR;
+    using Asp.Versioning;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Http;
     using CleanArchitecture.Application.Features.CustomerQuery.Queries.DTOs;
@@ -9,8 +10,9 @@
     using CleanArchitecture.Application.Features.CustomerQuery.Queries.Requests;
     using CleanArchitecture.Application.Features.CustomerQuery.Commands.Requests;
 
-    [Route("api/[controller]")]
     [ApiController]
+    [ApiVersion(1)]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class CustomerQueryController(IMediator mediator) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;

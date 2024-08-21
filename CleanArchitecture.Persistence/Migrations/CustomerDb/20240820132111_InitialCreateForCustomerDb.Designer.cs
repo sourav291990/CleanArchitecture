@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace CleanArchitecture.Persistence.Migrations
+namespace CleanArchitecture.Persistence.Migrations.CustomerDb
 {
     [DbContext(typeof(CustomerDbContext))]
-    [Migration("20240710152343_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240820132111_InitialCreateForCustomerDb")]
+    partial class InitialCreateForCustomerDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,10 @@ namespace CleanArchitecture.Persistence.Migrations
 
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CustomerType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -67,9 +71,10 @@ namespace CleanArchitecture.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d988d063-7128-42b2-afa0-8010b8468388"),
+                            Id = new Guid("92e6832f-d13d-4126-b3f2-2d716e52aced"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            CustomerType = "Prime",
                             FirstName = "SampleUser",
                             LastName = "SampleUser",
                             PrimaryContactNumber = 0L,
@@ -77,6 +82,54 @@ namespace CleanArchitecture.Persistence.Migrations
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UpdatedBy = new Guid("00000000-0000-0000-0000-000000000000")
                         });
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.Customer.CustomerOrders", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("OrderQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("CustomerOrders", "cleanarchitecture");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.Customer.CustomerOrders", b =>
+                {
+                    b.HasOne("CleanArchitecture.Domain.Entities.Customer.Customer", null)
+                        .WithMany("CustomerOrders")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.Customer.Customer", b =>
+                {
+                    b.Navigation("CustomerOrders");
                 });
 #pragma warning restore 612, 618
         }

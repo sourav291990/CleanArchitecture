@@ -1,6 +1,5 @@
 ﻿namespace CleanArchitecture.Domain.Entities.Customer;
 
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using CleanArchitecture.Domain.Entities.Common;
 

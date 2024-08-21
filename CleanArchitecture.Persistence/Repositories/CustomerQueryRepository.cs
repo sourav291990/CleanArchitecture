@@ -6,11 +6,13 @@
     using CleanArchitecture.Domain.Entities.Customer;
     using CleanArchitecture.Application.Models.CustomerQuery;
     using CleanArchitecture.Application.Contracts.Persistence;
+    using Microsoft.EntityFrameworkCore;
+    using CleanArchitecture.Persistence.DbContextProvider;
 
-    public class CustomerQueryRepository : GenericRepository<CustomerQuery>, ICustomerQueryRepository
+    public class CustomerQueryRepository : GenericRepository<CustomerQuery, DbContext>, ICustomerQueryRepository
     {
         private readonly IMongoCollection<CustomerQuery> _customerQueryCollection;
-        public CustomerQueryRepository(CustomerDbContext customerDbContext, IOptions<CustomerQuerySettings> customerQuerySettings) : base(customerDbContext)
+        public CustomerQueryRepository(IDbContextProvider dbContextProvider, IOptions<CustomerQuerySettings> customerQuerySettings) : base(dbContextProvider)
         {
             var mongoClient = new MongoClient(customerQuerySettings.Value.ConnectionString);
             var mongoDatabase = mongoClient.GetDatabase(customerQuerySettings.Value.DatabaseName);

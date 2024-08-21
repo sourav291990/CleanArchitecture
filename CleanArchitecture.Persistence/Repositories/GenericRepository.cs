@@ -4,84 +4,113 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using CleanArchitecture.Persistence.DbContexts;
 using CleanArchitecture.Domain.Entities.Common;
+using CleanArchitecture.Persistence.DbContextProvider;
 using CleanArchitecture.Application.Contracts.Persistence;
 
-public abstract class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
+public class GenericRepository<TEntity, TContext> : IGenericRepository<TEntity, TContext> where TEntity : BaseEntity where TContext : DbContext
 {
-    protected readonly CustomerDbContext _customerDbContext;
+    protected TContext Context { get; private set; }
 
-    public GenericRepository(CustomerDbContext customerDbContext) => _customerDbContext = customerDbContext;
+    public GenericRepository(IDbContextProvider dbContextProvider) => Context = dbContextProvider.Get<TContext>()
+                ?? throw new InvalidOperationException($"DbContext of type {typeof(TEntity).Name} is not registered");
 
-    public void Add(T entity)
+    public void Add(TEntity entity)
     {
-        _customerDbContext.Add(entity);
-        _customerDbContext.SaveChanges();
+        Set().Add(entity);
+        SaveChanges();
+        //_customerDbContext.Add(entity);
+        //_customerDbContext.SaveChanges();
     }
 
-    public Task AddAsync(T entity)
+    public async Task AddAsync(TEntity entity)
     {
-        _customerDbContext.AddAsync(entity);
-        _customerDbContext.SaveChangesAsync();
-        return Task.CompletedTask;
+        await Set().AddAsync(entity);
+        await SaveChangesAsync();
+        //_customerDbContext.AddAsync(entity);
+        //_customerDbContext.SaveChangesAsync();
     }
 
-    public void Delete(T entity)
+    public void Delete(TEntity entity)
     {
-        _customerDbContext.Remove(entity);
-        _customerDbContext.SaveChangesAsync();
+        //_customerDbContext.Remove(entity);
+        //_customerDbContext.SaveChangesAsync();
+        Set().Remove(entity);
+        SaveChanges();
     }
 
-    public Task DeleteAsync(T entity)
+    public async Task DeleteAsync(TEntity entity)
     {
-        _customerDbContext.Remove(entity);
-        _customerDbContext.SaveChangesAsync();
-        return Task.CompletedTask;
+        //_customerDbContext.Remove(entity);
+        //_customerDbContext.SaveChangesAsync();
+        Set().Remove(entity);
+        await SaveChangesAsync();
     }
 
     public bool Exists(Guid id)
     {
-        return null != _customerDbContext.Find<T>(id) ? true : false;
+        return null != Set().Find(id);
     }
 
     public async Task<bool> ExistsAsync(Guid id)
     {
-        var customer = await _customerDbContext.FindAsync<T>(id);
+        var customer = await Set().FindAsync(id);
         return customer != null;
     }
 
-    public T Get(Guid id)
+    public TEntity Get(Guid id)
     {
-        return _customerDbContext.Find<T>(id);
+        return Set().Find(id);
     }
 
-    public IReadOnlyList<T> GetAll()
+    public IReadOnlyList<TEntity> GetAll()
     {
-        return _customerDbContext.Set<T>().ToList();
+        return [.. Set()];
     }
 
-    public async Task<IReadOnlyList<T>> GetAllAsync()
+    public async Task<IReadOnlyList<TEntity>> GetAllAsync()
     {
-        return await _customerDbContext.Set<T>().ToListAsync();
+        return await Set().ToListAsync();
     }
 
-    public async Task<T> GetAsync(Guid id)
+    public async Task<TEntity> GetAsync(Guid id)
     {
-        return await _customerDbContext.Set<T>().FindAsync(id);
+        return await Set().FindAsync(id);
     }
 
-    public void Update(T entity)
+    public void Update(TEntity entity)
     {
-        _customerDbContext.Entry(entity).State = (Microsoft.EntityFrameworkCore.EntityState)EntityState.Modified;
-        _customerDbContext.SaveChanges();
+        Context.Entry(entity).State = EntityState.Modified;
+        SaveChanges();
+        //_customerDbContext.Entry(entity).State = EntityState.Modified;
+        //_customerDbContext.SaveChanges();
     }
 
-    public Task UpdateAsync(T entity)
+    public Task UpdateAsync(TEntity entity)
     {
-        _customerDbContext.Entry(entity).State = (Microsoft.EntityFrameworkCore.EntityState)EntityState.Modified;
-        _customerDbContext.SaveChangesAsync();
+        Context.Entry(entity).State = EntityState.Modified;
+        SaveChangesAsync();
+        //_customerDbContext.Entry(entity).State = EntityState.Modified;
+        //_customerDbContext.SaveChangesAsync();
         return Task.CompletedTask;
     }
+
+
+    #region Protected Methods
+    protected DbSet<TEntity> Set()
+    {
+        return Context.Set<TEntity>();
+    }
+
+    protected async Task SaveChangesAsync()
+    {
+        await Context.SaveChangesAsync();
+    }
+
+    protected void SaveChanges()
+    {
+        Context.SaveChangesAsync();
+    }
+    #endregion
 
 }

@@ -8,6 +8,7 @@ using CleanArchitecture.Persistence.Settings;
 using Microsoft.Extensions.DependencyInjection;
 using CleanArchitecture.Persistence.DbContexts;
 using CleanArchitecture.Persistence.Repositories;
+using CleanArchitecture.Persistence.DbContextProvider;
 using CleanArchitecture.Application.Contracts.Persistence;
 
 public static class PersistenceServiceRegistration
@@ -46,9 +47,12 @@ public static class PersistenceServiceRegistration
         using var serviceProvider = services.BuildServiceProvider();
         try
         {
-            var context = serviceProvider.GetRequiredService<ActivityDbContext>();
-            context.Database.Migrate();
-            Seed.ActivitySeed.SeedData(context);
+            var activityContext = serviceProvider.GetRequiredService<ActivityDbContext>();
+            var customerContext = serviceProvider.GetRequiredService<CustomerDbContext>();
+            activityContext.Database.Migrate();
+            Seed.ActivitySeed.SeedData(activityContext);
+
+            customerContext.Database.Migrate();
         }
         catch (Exception ex)
         {
@@ -56,7 +60,8 @@ public static class PersistenceServiceRegistration
             logger.LogError(ex, ex.Message);
         }
 
-        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+        services.AddScoped<IDbContextProvider, DbContextProvider.DbContextProvider>();
+        services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<ICustomerQueryRepository, CustomerQueryRepository>();
         services.AddScoped<IActivityRepository, ActivityRepository>();

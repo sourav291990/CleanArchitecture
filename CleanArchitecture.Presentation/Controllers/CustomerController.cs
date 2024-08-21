@@ -4,6 +4,7 @@
 namespace CleanArchitecture.Web.Controllers;
 
 using MediatR;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using CleanArchitecture.Application.Features.Customer.Queries.DTOs;
@@ -11,8 +12,9 @@ using CleanArchitecture.Application.Features.Customer.Commands.DTOs;
 using CleanArchitecture.Application.Features.Customer.Queries.Requests;
 using CleanArchitecture.Application.Features.Customer.Commands.Requests;
 
-[Route("api/[controller]")]
 [ApiController]
+[ApiVersion(1)]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class CustomerController : ControllerBase
 {
     private readonly IMediator _mediator;

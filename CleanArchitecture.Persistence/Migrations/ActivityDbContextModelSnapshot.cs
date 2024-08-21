@@ -4,19 +4,16 @@ using CleanArchitecture.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace CleanArchitecture.Persistence.Migrations.ActivityDb
+namespace CleanArchitecture.Persistence.Migrations
 {
     [DbContext(typeof(ActivityDbContext))]
-    [Migration("20240804133433_InitialCreateForActivityDb")]
-    partial class InitialCreateForActivityDb
+    partial class ActivityDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,7 +106,7 @@ namespace CleanArchitecture.Persistence.Migrations.ActivityDb
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5be82b9a-5108-407b-8469-301ed67694c8"),
+                            Id = new Guid("01d0a2d9-6852-4b14-9497-c1692880115b"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CustomerType = "Prime",

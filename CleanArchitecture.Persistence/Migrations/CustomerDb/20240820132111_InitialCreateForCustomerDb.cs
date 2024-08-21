@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace CleanArchitecture.Persistence.Migrations.ActivityDb
+namespace CleanArchitecture.Persistence.Migrations.CustomerDb
 {
     /// <inheritdoc />
-    public partial class InitialCreateForActivityDb : Migration
+    public partial class InitialCreateForCustomerDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,28 +15,7 @@ namespace CleanArchitecture.Persistence.Migrations.ActivityDb
                 name: "cleanarchitecture");
 
             migrationBuilder.CreateTable(
-                name: "Activities",
-                schema: "cleanarchitecture",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Venue = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Activities", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Customer",
+                name: "Customers",
                 schema: "cleanarchitecture",
                 columns: table => new
                 {
@@ -53,7 +32,7 @@ namespace CleanArchitecture.Persistence.Migrations.ActivityDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customer", x => x.Id);
+                    table.PrimaryKey("PK_Customers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,19 +53,19 @@ namespace CleanArchitecture.Persistence.Migrations.ActivityDb
                 {
                     table.PrimaryKey("PK_CustomerOrders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CustomerOrders_Customer_CustomerId",
+                        name: "FK_CustomerOrders_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalSchema: "cleanarchitecture",
-                        principalTable: "Customer",
+                        principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 schema: "cleanarchitecture",
-                table: "Customer",
+                table: "Customers",
                 columns: new[] { "Id", "CreatedAt", "CreatedBy", "CustomerType", "FirstName", "LastName", "PrimaryContactNumber", "SecondaryContactNumber", "UpdatedAt", "UpdatedBy" },
-                values: new object[] { new Guid("5be82b9a-5108-407b-8469-301ed67694c8"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("00000000-0000-0000-0000-000000000000"), "Prime", "SampleUser", "SampleUser", 0L, 0L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("00000000-0000-0000-0000-000000000000") });
+                values: new object[] { new Guid("92e6832f-d13d-4126-b3f2-2d716e52aced"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("00000000-0000-0000-0000-000000000000"), "Prime", "SampleUser", "SampleUser", 0L, 0L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("00000000-0000-0000-0000-000000000000") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CustomerOrders_CustomerId",
@@ -99,15 +78,11 @@ namespace CleanArchitecture.Persistence.Migrations.ActivityDb
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Activities",
-                schema: "cleanarchitecture");
-
-            migrationBuilder.DropTable(
                 name: "CustomerOrders",
                 schema: "cleanarchitecture");
 
             migrationBuilder.DropTable(
-                name: "Customer",
+                name: "Customers",
                 schema: "cleanarchitecture");
         }
     }

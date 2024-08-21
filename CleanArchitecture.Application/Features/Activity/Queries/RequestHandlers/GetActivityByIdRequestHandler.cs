@@ -2,19 +2,20 @@
 
 using MediatR;
 using AutoMapper;
+using System.Threading;
+using System.Threading.Tasks;
 using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Features.Activity.Queries.DTOs;
 using CleanArchitecture.Application.Features.Activity.Queries.Requests;
 
-public class GetActivityListRequestHandler(IActivityRepository activityRepository, IMapper mapper) : IRequestHandler<GetActivityListRequest, IReadOnlyList<GetActivityDto>>
+public class GetActivityByIdRequestHandler(IActivityRepository activityRepository, IMapper mapper) : IRequestHandler<GetActivityByIdRequest, GetActivityDto>
 {
     private readonly IActivityRepository _activityRepository = activityRepository;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<IReadOnlyList<GetActivityDto>> Handle(GetActivityListRequest request, CancellationToken cancellationToken)
+    public async Task<GetActivityDto> Handle(GetActivityByIdRequest request, CancellationToken cancellationToken)
     {
-        var activities = await _activityRepository.GetAllAsync();
-
-        return _mapper.Map<List<GetActivityDto>>(activities);
+        var activity = await _activityRepository.GetAsync(request.ActivityId);
+        return _mapper.Map<GetActivityDto>(activity);
     }
 }
