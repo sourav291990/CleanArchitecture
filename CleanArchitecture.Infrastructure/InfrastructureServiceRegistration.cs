@@ -3,10 +3,12 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CleanArchitecture.Infrastructure.Logging;
+using CleanArchitecture.Infrastructure.Caching;
 using CleanArchitecture.Application.Models.EmailSender;
-using CleanArchitecture.Application.Contracts.Infrastructure.Logging;
-using CleanArchitecture.Application.Contracts.Infrastructure.EmailSender;
 using CleanArchitecture.Application.Models.CustomerQuery;
+using CleanArchitecture.Application.Contracts.Infrastructure.Logging;
+using CleanArchitecture.Application.Contracts.Infrastructure.Caching;
+using CleanArchitecture.Application.Contracts.Infrastructure.EmailSender;
 
 public static class InfrastructureServiceRegistration
 {
@@ -22,6 +24,8 @@ public static class InfrastructureServiceRegistration
         services.Configure<CustomerQuerySettings>(configuration.GetSection("CustomerQueryDatabaseSettings"));
         services.AddTransient<IEmailSender, EmailSender.EmailSender>();
         services.AddSingleton(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
+        services.AddSingleton<ICacheService, CacheService>();
+        services.AddDistributedMemoryCache();
         return services;
     }
 }
