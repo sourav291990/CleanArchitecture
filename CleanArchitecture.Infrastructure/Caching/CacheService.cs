@@ -20,7 +20,7 @@ public class CacheService(IDistributedCache distributedCache) : ICacheService
         {
             return default(T?);
         }
-        T? result = JsonConvert.DeserializeObject<T>(cachedValue);
+        T result = JsonConvert.DeserializeObject<T>(cachedValue);
         return result;
     }
 

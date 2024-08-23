@@ -14,7 +14,7 @@ using CleanArchitecture.Application.Features.Activity.Commands.Requests;
 [ApiController]
 [ApiVersion(1)]
 [Route("api/v{version:apiVersion}/[controller]")]
-[Authorize]
+//[Authorize]
 public class ActivityController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;

@@ -1,35 +1,30 @@
-import { useState } from 'react'
-import reactLogo from '../../assets/react.svg'
-import viteLogo from '/vite.svg'
-import '../../App.css'
+import { useEffect, useState } from "react";
+import "../../App.css";
+import axios from "axios";
+import { IActivity } from "../models/IActivity";
+import Navbar from "./Navbar";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [activities, setActivities] = useState<IActivity[]>([]);
+
+  useEffect(() => {
+    axios.get<IActivity[]>("https://localhost:7104/api/v1/activity").then((response) => {
+      console.log(response.data);
+      setActivities(response.data);
+    });
+  },[]);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <Navbar/>
+      <h1>Activities</h1>
+      <ul>
+        {activities.map((activity)=>(
+          <li key={activity.id}>{activity.title}</li>
+        ))}
+      </ul>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

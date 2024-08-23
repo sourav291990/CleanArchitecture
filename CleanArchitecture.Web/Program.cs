@@ -1,8 +1,17 @@
 using CleanArchitecture.Presentation;
 using CleanArchitecture.Web.Middlewares;
+using CleanArchitecture.Web.Options;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Net.Http.Headers;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+var corsSection = builder.Configuration.GetSection("CorsPolicyOptions");
+var corsOptions = new CorsPolicyOptions();
+corsSection.Bind(corsOptions);
+
+builder.Services.Configure<CorsPolicyOptions>(corsSection);
+
 
 builder.Services.AddResponseCaching(options =>
 {
@@ -12,6 +21,15 @@ builder.Services.AddResponseCaching(options =>
 
 // Register Presentation layer Services
 builder.Services.RegisterPresentationServices(builder.Configuration);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(corsOptions.PolicyName, option =>
+    {
+        option.WithOrigins(corsOptions.AllowedOrigins)
+              .WithMethods(corsOptions.AllowedMethods);
+    });
+});
 
 // Add controllers specified in presentation layers
 var presentationAssembly = typeof(PresentationAssemblyReference).Assembly;
@@ -27,7 +45,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors(corsOptions.PolicyName);
 app.UseHttpsRedirection();
 app.UseResponseCaching();
 app.Use(async (context, next) =>

@@ -4,8 +4,8 @@ using MediatR;
 using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Features.Activity.Queries.DTOs;
-using CleanArchitecture.Application.Features.Activity.Queries.Requests;
 using CleanArchitecture.Application.Contracts.Infrastructure.Caching;
+using CleanArchitecture.Application.Features.Activity.Queries.Requests;
 
 public class GetActivityListRequestHandler(IActivityRepository activityRepository, IMapper mapper, ICacheService cacheService) : IRequestHandler<GetActivityListRequest, IReadOnlyList<GetActivityDto>>
 {

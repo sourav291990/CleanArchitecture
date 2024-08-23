@@ -1,12 +1,12 @@
 ﻿namespace CleanArchitecture.Presentation;
 
+using Asp.Versioning;
 using CleanArchitecture.Identity;
 using CleanArchitecture.Application;
 using CleanArchitecture.Persistence;
 using CleanArchitecture.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Asp.Versioning;
 
 public static class PresentationServiceRegistration
 {

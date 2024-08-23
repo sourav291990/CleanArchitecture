@@ -2,9 +2,9 @@
 public record GetActivityDto
 {
     public Guid Id { get; set; }
-    public string Title { get; private set; }
-    public string Description { get; private set; }
-    public string Category { get; private set; }
-    public string City { get; private set; }
-    public string Venue { get; private set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public string Category { get; set; }
+    public string City { get; set; }
+    public string Venue { get; set; }
 }
