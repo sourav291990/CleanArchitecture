@@ -4,8 +4,12 @@ namespace CleanArchitecture.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using CleanArchitecture.Domain.Entities.Common;
 using CleanArchitecture.Domain.Entities.Activity;
-public class ActivityDbContext(DbContextOptions<ActivityDbContext> options) : DbContext(options)
+
+public class ActivityDbContext : DbContext
 {
+    public ActivityDbContext(DbContextOptions<ActivityDbContext> options) : base(options)
+    {
+    }
     public DbSet<Activity> Activities { get; set; }
 
     public override int SaveChanges()

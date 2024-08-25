@@ -5,7 +5,6 @@ using MediatR;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authorization;
 using CleanArchitecture.Application.Features.Activity.Queries.DTOs;
 using CleanArchitecture.Application.Features.Activity.Commands.DTOs;
 using CleanArchitecture.Application.Features.Activity.Queries.Requests;
@@ -46,6 +45,18 @@ public class ActivityController(IMediator mediator) : ControllerBase
     {
         var activity = await _mediator.Send(new GetActivityByIdRequest { ActivityId = id });
         return Ok(activity);
+    }
+
+    // PUT api/<ActivityController>/5
+    [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> Put(Guid id, [FromBody] UpdateActivityDto activity)
+    {
+        activity.Id = id;
+        await _mediator.Send(new UpdateActivityCommandRequest { Activity = activity });
+        return NoContent();
     }
 
     // DELETE api/<ActivityController>/5

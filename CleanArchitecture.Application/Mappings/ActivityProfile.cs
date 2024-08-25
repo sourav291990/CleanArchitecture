@@ -13,6 +13,7 @@ public class ActivityProfile : Profile
         #region Activity
         CreateMap<GetActivityDto, Activity>().ReverseMap();
         CreateMap<AddActivityDto, Activity>().ReverseMap();
+        CreateMap<UpdateActivityDto, Activity>().ReverseMap();
         #endregion
     }
 }

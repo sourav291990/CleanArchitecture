@@ -25,7 +25,7 @@ public static class PersistenceServiceRegistration
                 {
                     sqlServerActions.EnableRetryOnFailure(databaseOptions.MaxRetryCount);
                     sqlServerActions.CommandTimeout(databaseOptions.CommandTimeout);
-                });
+                }).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
             options.EnableDetailedErrors(databaseOptions.EnableDetailedError);
             options.EnableSensitiveDataLogging(databaseOptions.EnableSensitiveDataLogging);
@@ -38,7 +38,7 @@ public static class PersistenceServiceRegistration
             {
                 sqlServerActions.EnableRetryOnFailure(databaseOptions.MaxRetryCount);
                 sqlServerActions.CommandTimeout(databaseOptions.CommandTimeout);
-            });
+            }).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
             options.EnableDetailedErrors(databaseOptions.EnableDetailedError);
             options.EnableSensitiveDataLogging(databaseOptions.EnableSensitiveDataLogging);
