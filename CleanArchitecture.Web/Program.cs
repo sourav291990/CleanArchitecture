@@ -13,11 +13,11 @@ corsSection.Bind(corsOptions);
 builder.Services.Configure<CorsPolicyOptions>(corsSection);
 
 
-builder.Services.AddResponseCaching(options =>
-{
-    options.MaximumBodySize = 1024;
-    options.UseCaseSensitivePaths = true;
-});
+//builder.Services.AddResponseCaching(options =>
+//{
+//    options.MaximumBodySize = 1024;
+//    options.UseCaseSensitivePaths = true;
+//});
 
 // Register Presentation layer Services
 builder.Services.RegisterPresentationServices(builder.Configuration);
@@ -27,7 +27,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy(corsOptions.PolicyName, option =>
     {
         option.WithOrigins(corsOptions.AllowedOrigins)
-              .WithMethods(corsOptions.AllowedMethods);
+              .WithMethods(corsOptions.AllowedMethods)
+              .WithHeaders(corsOptions.AllowedHeaders);
     });
 });
 
@@ -47,18 +48,18 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors(corsOptions.PolicyName);
 app.UseHttpsRedirection();
-app.UseResponseCaching();
-app.Use(async (context, next) =>
-{
-    context.Response.GetTypedHeaders().CacheControl = new Microsoft.Net.Http.Headers.CacheControlHeaderValue
-    {
-        Public = true,
-        MaxAge = TimeSpan.FromSeconds(30)
-    };
-    context.Response.Headers[HeaderNames.Vary] = new string[] { "Accept-Encoding" };
+//app.UseResponseCaching();
+//app.Use(async (context, next) =>
+//{
+//    context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue
+//    {
+//        Public = true,
+//        MaxAge = TimeSpan.FromSeconds(30)
+//    };
+//    context.Response.Headers[HeaderNames.Vary] = new string[] { "Accept-Encoding" };
 
-    await next(context);
-});
+//    await next(context);
+//});
 
 app.UseAuthentication();
 app.UseAuthorization();

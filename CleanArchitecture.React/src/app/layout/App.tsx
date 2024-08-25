@@ -45,28 +45,45 @@ function App() {
   function handleCreateOrEditActivity(activity: IActivity) {
     setSubmitting(true);
     if (activity.id) {
-      activityAgent.Activities.update(activity).then(() => {
-        setActivities([
-          ...activities.filter((x) => x.id !== activity.id),
-          activity,
-        ]);
-        setSelectedActivity(activity);
-        setEditMode(false);
-        setSubmitting(false);
-      });
+      activityAgent.Activities.update(activity)
+        .then(() => {
+          setActivities([
+            ...activities.filter((x) => x.id !== activity.id),
+            activity,
+          ]);
+          setSelectedActivity(activity);
+          setEditMode(false);
+          setSubmitting(false);
+        })
+        .catch((error) => {
+          debugger;
+          console.log(error);
+        });
     } else {
       activity.id = uuid();
-      activityAgent.Activities.create(activity).then(() => {
-        setActivities([...activities, { ...activity, id: uuid() }]);
-        setSelectedActivity(activity);
-        setEditMode(false);
-        setSubmitting(false);
-      });
+      activityAgent.Activities.create(activity)
+        .then(() => {
+          setActivities([...activities, { ...activity, id: uuid() }]);
+          setSelectedActivity(activity);
+          setEditMode(false);
+          setSubmitting(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
 
   function handleDeleteActivity(id: string) {
-    setActivities([...activities.filter((x) => x.id !== id)]);
+    setSubmitting(true);
+    activityAgent.Activities.delete(id)
+      .then(() => {
+        setActivities([...activities.filter((x) => x.id !== id)]);
+        setSubmitting(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   if (loading)
     return <LoadingComponent content="Loading app"></LoadingComponent>;
@@ -86,7 +103,7 @@ function App() {
           closeForm={handleFormClose}
           createOrEdit={handleCreateOrEditActivity}
           deleteActivity={handleDeleteActivity}
-          submitting = {submitting}
+          submitting={submitting}
         />
       </Container>
     </>

@@ -4,6 +4,7 @@ using MediatR;
 using AutoMapper;
 using CleanArchitecture.Application.CustomExceptions;
 using CleanArchitecture.Application.Contracts.Persistence;
+using CleanArchitecture.Application.Contracts.Infrastructure.Caching;
 using CleanArchitecture.Application.Contracts.Infrastructure.Logging;
 using CleanArchitecture.Application.Features.Activity.Commands.Requests;
 using CleanArchitecture.Application.Features.Activity.Commands.Requests.Validators;
@@ -13,12 +14,15 @@ public class DeleteActivityCommandRequestHandler : IRequestHandler<DeleteActivit
     private readonly IActivityRepository _activityRepository;
     private readonly IMapper _mapper;
     private readonly IAppLogger<DeleteActivityCommandRequestHandler> _logger;
+    private readonly ICacheService _cacheService;
 
-    public DeleteActivityCommandRequestHandler(IActivityRepository activityRepository, IMapper mapper, IAppLogger<DeleteActivityCommandRequestHandler> logger)
+    public DeleteActivityCommandRequestHandler(IActivityRepository activityRepository, IMapper mapper,
+        IAppLogger<DeleteActivityCommandRequestHandler> logger, ICacheService cacheService)
     {
         _activityRepository = activityRepository;
         _mapper = mapper;
         _logger = logger;
+        _cacheService = cacheService;
     }
 
     public async Task<Unit> Handle(DeleteActivityCommandRequest request, CancellationToken cancellationToken)
@@ -32,7 +36,7 @@ public class DeleteActivityCommandRequestHandler : IRequestHandler<DeleteActivit
         }
         var activity = await _activityRepository.GetAsync(request.ActivityId);
         await _activityRepository.DeleteAsync(activity);
-
+        await _cacheService.RemoveAsync("activities");
         return Unit.Value;
     }
 }
