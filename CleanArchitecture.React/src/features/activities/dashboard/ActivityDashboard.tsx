@@ -1,49 +1,22 @@
 import { Grid } from "semantic-ui-react";
 import ActivityList from "../ActivityList";
-import { IActivity } from "../../../app/models/IActivity";
 import ActivityDetails from "../details/ActivityDetails";
 import ActivityForm from "../form/ActivityForm";
+import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
-interface IProps {
-  activities: IActivity[];
-  selectedActivity: IActivity | undefined;
-  selectActivity: (id: string) => void;
-  cancelActivity: () => void;
-  editMode: boolean;
-  openForm: (id:string) => void;
-  closeForm: () => void;
-  createOrEdit:(activity: IActivity)=>void;
-  deleteActivity:(id: string) => void;
-  submitting: boolean
-}
-
-export default function ActivityDashboard({
-  activities,
-  selectedActivity,
-  selectActivity,
-  cancelActivity,
-  editMode,
-  openForm,
-  closeForm,
-  createOrEdit,
-  deleteActivity,
-  submitting
-}: IProps) {
+export default observer(function ActivityDashboard() {
+  const { activityStore } = useStore();
+  const { selectedActivity, editMode } = activityStore;
   return (
     <Grid>
       <Grid.Column width="10">
-        <ActivityList activities={activities} selectActivity={selectActivity} deleteActivity={deleteActivity} />
+        <ActivityList />
       </Grid.Column>
       <Grid.Column width="6">
-        {selectedActivity && !editMode && (
-          <ActivityDetails
-            activity={selectedActivity}
-            cancelActivity={cancelActivity}
-            openForm={openForm}/>
-        )}
-        {editMode && 
-        <ActivityForm closeForm={closeForm} activity={selectedActivity} createOrEdit={createOrEdit} submitting={submitting}/>}
+        {selectedActivity && !editMode && <ActivityDetails />}
+        {editMode && <ActivityForm />}
       </Grid.Column>
     </Grid>
   );
-}
+});
