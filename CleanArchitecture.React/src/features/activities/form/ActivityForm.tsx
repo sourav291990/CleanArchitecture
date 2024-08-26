@@ -6,7 +6,7 @@ import { observer } from "mobx-react-lite";
 export default observer(function ActivityForm() {
   const {activityStore} = useStore();
 
-  const {selectedActivity,closeForm, createActivity, updateActivity, loading} = activityStore
+  const {selectedActivity, createActivity, updateActivity, loading} = activityStore
   const initialState = selectedActivity ?? {
     id: "",
     title: "",
@@ -79,7 +79,6 @@ export default observer(function ActivityForm() {
           content="Submit"
         ></Button>
         <Button
-          onClick={closeForm}
           floated="right"
           type="button"
           content="Cancel"
