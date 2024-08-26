@@ -13,9 +13,10 @@ public class Activity : BaseEntity
     public string Category { get; private set; }
     public string City { get; private set; }
     public string Venue { get; private set; }
+    public DateTime Date { get; set; }
 
-    public static Activity Create(string title, string description
-        , string category, string city, string venue)
+    public static Activity Create(Guid id, string title, string description
+        , string category, string city, string venue, DateTime date)
     {
         var activity = new Activity
         {
@@ -23,9 +24,10 @@ public class Activity : BaseEntity
             Description = description,
             Category = category,
             City = city,
-            Venue = venue
+            Venue = venue,
+            Date = date
         };
-        activity.Id = Guid.NewGuid();
+        activity.Id = id;
         return activity;
     }
 }

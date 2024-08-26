@@ -2,11 +2,11 @@ import { Button, Item, Label, Segment } from "semantic-ui-react";
 import { SyntheticEvent, useState } from "react";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import Moment from "react-moment";
 
-
-export default observer (function ActivityList() {
-  const {activityStore} = useStore();
-  const{activities, deleteActivity, loading} = activityStore
+export default observer(function ActivityList() {
+  const { activityStore } = useStore();
+  const { activitiesByDate, deleteActivity, loading } = activityStore;
   const [target, setTarget] = useState("");
 
   function handleActivityDelete(
@@ -20,7 +20,7 @@ export default observer (function ActivityList() {
   return (
     <Segment>
       <Item.Group divided>
-        {activities.map((activity) => (
+        {activitiesByDate.map((activity) => (
           <Item key={activity.id}>
             <Item.Content>
               <Item.Header as="a">{activity.title} </Item.Header>
@@ -54,4 +54,4 @@ export default observer (function ActivityList() {
       </Item.Group>
     </Segment>
   );
-})
+});
