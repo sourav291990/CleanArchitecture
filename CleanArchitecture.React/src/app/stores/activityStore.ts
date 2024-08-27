@@ -38,7 +38,11 @@ export default class ActivityStore {
   loadActivity = async (id: string) => {
     let activity = this.getActivity(id);
 
-    if (activity) this.selectedActivity = activity;
+    if (activity) 
+      {
+        this.selectedActivity = activity;
+        return activity;
+      }
     else {
       this.setLoadInitial(true);
       try {
@@ -46,6 +50,7 @@ export default class ActivityStore {
         this.selectedActivity = activity;
         this.setActivity(activity);
         this.setLoadInitial(false);
+        return activity;
       } catch (error) {
         console.log(error);
         this.setLoadInitial(false);
