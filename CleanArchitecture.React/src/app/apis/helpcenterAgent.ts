@@ -1,10 +1,10 @@
 import axios from "axios";
 import request from "./request";
 
-axios.defaults.baseURL = "https://localhost:7104/api/v1";
+axios.defaults.baseURL = "https://api.openai.com/v1/chat/completions";
 
 const HelpCenter = {
-  ask: (question: string) => request.post<string>("/ask", question),
+  ask: (question: string) => request.post<string>("", question),
 };
 
 const helpCenterAgent = {

@@ -5,7 +5,6 @@ import Clear from "./clear/Clear";
 import History from "./history/History";
 import "./Helpcenter.css";
 import helpCenterAgent from "../../app/apis/helpcenterAgent";
-import { json } from "react-router-dom";
 
 export default function HelpCenter() {
   const [input, setInput] = useState("");
@@ -67,7 +66,12 @@ export default function HelpCenter() {
   );
 
   function AskModel(input: string) {
-    helpCenterAgent.HelpCenter.ask(input).then((data) => {
+    debugger;
+    const body = JSON.stringify({
+      model: "gpt-3.5-turbo",
+      messages: [...messages, input],
+    });
+    helpCenterAgent.HelpCenter.ask(body).then((data) => {
       setMessages((messages: string) => [
         ...messages,
         {
